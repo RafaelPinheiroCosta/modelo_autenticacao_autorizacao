@@ -19,7 +19,7 @@ public class JwtService {
 
     public JwtService(
             @Value("${security.jwt.secret}") String secret,
-            @Value("${security.jwt.expiration-seconds:3600}") long expirationSeconds) {
+            @Value("${security.jwt.expiration:3600}") long expirationSeconds) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
         this.expirationSeconds = expirationSeconds;
     }
