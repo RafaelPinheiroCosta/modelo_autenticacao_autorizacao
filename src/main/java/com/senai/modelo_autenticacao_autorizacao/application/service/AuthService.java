@@ -20,7 +20,7 @@ public class AuthService {
 
     public String login(AuthDTO.LoginRequest req) {
         Usuario usuario = usuarios.findByEmail(req.email())
-                .orElseThrow(() -> new ChangeSetPersister.NotFoundException("Usuário não encontrado"));
+                .orElseThrow(() ->  new RuntimeException("Usuário não encontrado"));
 
         if (!encoder.matches(req.senha(), usuario.getSenhaHash())) {
             throw new BadCredentialsException("Credenciais inválidas");
