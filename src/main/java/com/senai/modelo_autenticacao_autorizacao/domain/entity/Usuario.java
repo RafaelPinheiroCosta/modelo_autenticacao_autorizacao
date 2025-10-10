@@ -31,7 +31,6 @@ public abstract class Usuario {
     @Column(nullable = false, unique = true, length = 14)
     protected String cpf; // formato "000.000.000-00" (validação pode ser ampliada)
 
-    // Campos de autenticação
     @Email
     @NotBlank
     @Column(nullable = false, unique = true)
@@ -42,7 +41,7 @@ public abstract class Usuario {
 
     @NotBlank
     @Column(nullable = false)
-    protected String senhaHash;
+    protected String senha;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

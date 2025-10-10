@@ -1,9 +1,12 @@
 package com.senai.modelo_autenticacao_autorizacao.interface_ui.exception;
 
+import com.senai.modelo_autenticacao_autorizacao.domain.UsuarioNaoEncontradoException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -82,8 +85,39 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ProblemDetail handleBadCredentials(BadCredentialsException ex, HttpServletRequest request) {
+        return buildProblem(
+                HttpStatus.UNAUTHORIZED,
+                "Credenciais inválidas",
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+    }
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ProblemDetail handleMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpServletRequest request) {
+        return buildProblem(
+                HttpStatus.METHOD_NOT_ALLOWED,
+                "Método não permitido",
+                String.format("O método %s não é suportado para esta rota. Métodos suportados: %s",
+                        ex.getMethod(),
+                        String.join(", ", ex.getSupportedMethods() != null ? ex.getSupportedMethods() : new String[]{})),
+                request.getRequestURI()
+        );
+    }
+
+    @ExceptionHandler(UsuarioNaoEncontradoException.class)
+    public ProblemDetail handleUsuarioNaoEncontrado(UsuarioNaoEncontradoException ex, HttpServletRequest request) {
+        return buildProblem(
+                HttpStatus.UNAUTHORIZED,
+                "Usuário não encontrado",
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+    }
+
     @ExceptionHandler(Exception.class)
-    public ProblemDetail generic(Exception ex, HttpServletRequest request) {
+    public ProblemDetail hanlderGenerico(Exception ex, HttpServletRequest request) {
         return buildProblem(
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 "Erro interno",

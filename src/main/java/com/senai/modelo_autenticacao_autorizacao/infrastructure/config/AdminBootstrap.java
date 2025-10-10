@@ -27,7 +27,7 @@ public class AdminBootstrap implements CommandLineRunner {
         professorRepository.findByEmail(adminEmail).ifPresentOrElse(
                 prof -> {
                     if (!prof.isAtivo()) {
-                        prof.setAtivo(true); // reativa se estava desativado
+                        prof.setAtivo(true);
                         professorRepository.save(prof);
                     }
                 },
@@ -36,8 +36,8 @@ public class AdminBootstrap implements CommandLineRunner {
                             .nome("Administrador Provisório")
                             .email(adminEmail)
                             .cpf("000.000.000-00")
-                            .senhaHash(passwordEncoder.encode(adminSenha))
-                            .role(Role.ADMIN) // Enum ADMIN
+                            .senha(passwordEncoder.encode(adminSenha))
+                            .role(Role.ADMIN)
                             .build();
                     professorRepository.save(admin);
                     System.out.println("⚡ Usuário admin provisório criado: " + adminEmail);
