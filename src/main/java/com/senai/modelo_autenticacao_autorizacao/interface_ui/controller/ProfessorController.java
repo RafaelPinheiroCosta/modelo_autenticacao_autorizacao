@@ -1,6 +1,5 @@
 package com.senai.modelo_autenticacao_autorizacao.interface_ui.controller;
 
-import com.rafaelcosta.spring_mqttx.domain.annotation.MqttPublisher;
 import com.senai.modelo_autenticacao_autorizacao.application.dto.ProfessorDTO;
 import com.senai.modelo_autenticacao_autorizacao.application.service.ProfessorService;
 import lombok.RequiredArgsConstructor;

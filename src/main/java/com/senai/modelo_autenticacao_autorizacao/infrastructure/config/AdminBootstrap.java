@@ -40,7 +40,7 @@ public class AdminBootstrap implements CommandLineRunner {
                             .role(Role.ADMIN)
                             .build();
                     professorRepository.save(admin);
-                    System.out.println("⚡ Usuário admin provisório criado: " + adminEmail);
+                    System.out.println("Usuário admin provisório criado: " + adminEmail);
                 }
         );
     }
